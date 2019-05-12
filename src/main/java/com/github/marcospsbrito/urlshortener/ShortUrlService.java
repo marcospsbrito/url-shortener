@@ -38,7 +38,7 @@ public class ShortUrlService {
         String key;
         do{
             key = generateKey();
-        }while(repository.findByUrl(url).isPresent());
+        }while(repository.findById(key).isPresent());
         return ShortUrl.builder().url(url).key(key).createAt(new Date()).build();
     }
 
