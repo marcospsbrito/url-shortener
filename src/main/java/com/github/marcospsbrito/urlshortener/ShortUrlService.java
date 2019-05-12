@@ -4,10 +4,12 @@ import com.github.marcospsbrito.urlshortener.mapper.ShortUrlMapper;
 import com.github.marcospsbrito.urlshortener.model.dto.ShortUrlDTO;
 import com.github.marcospsbrito.urlshortener.model.entity.ShortUrl;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.NotFoundException;
+import java.net.MalformedURLException;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
@@ -25,7 +27,9 @@ public class ShortUrlService {
         }
     }
 
-    public ShortUrlDTO createShortUrl(String url) {
+    public ShortUrlDTO createShortUrl(String url) throws MalformedURLException {
+        if(!new UrlValidator().isValid(url))
+            throw new MalformedURLException();
         try {
             return ShortUrlMapper.toDTO(repository.findByUrl(url).get());
         }catch (NoSuchElementException e){

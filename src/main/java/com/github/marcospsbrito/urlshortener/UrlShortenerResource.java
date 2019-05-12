@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.NotFoundException;
+import java.net.MalformedURLException;
 
 @RestController
 public class UrlShortenerResource {
@@ -28,7 +29,11 @@ public class UrlShortenerResource {
     @JsonView(ShortUrlDTO.PostView.class)
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ShortUrlDTO> post(@RequestBody ShortUrlDTO dto){
-        return ResponseEntity.ok(service.createShortUrl(dto.getUrl()));
+        try {
+            return ResponseEntity.ok(service.createShortUrl(dto.getUrl()));
+        } catch (MalformedURLException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
     
 }

@@ -4,12 +4,12 @@ import com.github.marcospsbrito.urlshortener.model.dto.ShortUrlDTO;
 import com.github.marcospsbrito.urlshortener.model.entity.ShortUrl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.ws.rs.NotFoundException;
+import java.net.MalformedURLException;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 public class ShortUrlServiceTest {
 
     private static final String KEY = "key";
-    private static final String URL = "url";
+    private static final String URL = "http://test.com";
 
     @InjectMocks
     private ShortUrlService service;
@@ -48,7 +48,7 @@ public class ShortUrlServiceTest {
     }
 
     @Test
-    public void createShortUrl() {
+    public void createShortUrl() throws MalformedURLException {
         ShortUrl shortUrl = ShortUrl.builder().url(URL).key(KEY).build();
         when(repository.findByUrl(URL)).thenReturn(Optional.ofNullable(null));
         when(repository.findById(any())).thenReturn(Optional.ofNullable(null));
@@ -64,7 +64,7 @@ public class ShortUrlServiceTest {
     }
 
     @Test
-    public void shouldReturnExistent() {
+    public void shouldReturnExistent() throws MalformedURLException {
         ShortUrl shortUrl = ShortUrl.builder().url(URL).key(KEY).build();
         when(repository.findByUrl(URL)).thenReturn(Optional.ofNullable(shortUrl));
 
@@ -76,4 +76,10 @@ public class ShortUrlServiceTest {
         assertThat(shortUrlDTO.getKey(), equalTo(shortUrl.getKey()));
         assertThat(shortUrlDTO.getUrl(), equalTo(shortUrl.getUrl()));
     }
+
+    @Test(expected = MalformedURLException.class)
+    public void shouldThrowMalformedURLException() throws MalformedURLException {
+        service.createShortUrl("$$$MALFORMED$$$");
+    }
+
 }
