@@ -11,17 +11,18 @@ import lombok.Setter;
 public class ShortUrlDTO {
 
 
-    public interface get{}
-    public interface post{}
+    public static final String APP_HOST = "https://short-url-marcospsbrito.herokuapp.com/";
 
-    @JsonView(ShortUrlDTO.post.class)
+    public interface GetView{}
+    public interface PostView{}
+
+    @JsonView(GetView.class)
     private String url;
 
-    @JsonView(ShortUrlDTO.post.class)
     private String key;
 
-    @JsonView({ShortUrlDTO.post.class,ShortUrlDTO.get.class})
+    @JsonView({PostView.class})
     public String getNewUrl(){
-        return "http://localhost:8081/"+key;
+        return APP_HOST +key;
     }
 }

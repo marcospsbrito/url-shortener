@@ -14,7 +14,7 @@ public class UrlShortenerResource {
     @Autowired
     private ShortUrlService service;
 
-    @JsonView(ShortUrlDTO.get.class)
+    @JsonView(ShortUrlDTO.GetView.class)
     @RequestMapping(value = "/{key}",method = RequestMethod.GET)
     public ResponseEntity<ShortUrlDTO> get(@PathVariable String key) {
         try{
@@ -25,7 +25,7 @@ public class UrlShortenerResource {
         }
     }
 
-    @JsonView(ShortUrlDTO.post.class)
+    @JsonView(ShortUrlDTO.PostView.class)
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ShortUrlDTO> post(@RequestBody ShortUrlDTO dto){
         return ResponseEntity.ok(service.createShortUrl(dto.getUrl()));
