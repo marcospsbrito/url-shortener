@@ -1,5 +1,6 @@
 package com.github.marcospsbrito.urlshortener;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.github.marcospsbrito.urlshortener.model.dto.ShortUrlDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,9 @@ public class UrlShortenerResource {
     @Autowired
     private ShortUrlService service;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<ShortUrlDTO> get(@RequestParam String key) {
+    @JsonView(ShortUrlDTO.get.class)
+    @RequestMapping(value = "/{key}",method = RequestMethod.GET)
+    public ResponseEntity<ShortUrlDTO> get(@PathVariable String key) {
         try{
             ShortUrlDTO shortUrlDTO = service.find(key);
             return ResponseEntity.ok(shortUrlDTO);
@@ -23,6 +25,7 @@ public class UrlShortenerResource {
         }
     }
 
+    @JsonView(ShortUrlDTO.post.class)
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ShortUrlDTO> post(@RequestBody ShortUrlDTO dto){
         return ResponseEntity.ok(service.createShortUrl(dto.getUrl()));
