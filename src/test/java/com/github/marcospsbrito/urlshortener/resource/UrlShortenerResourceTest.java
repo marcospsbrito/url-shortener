@@ -32,12 +32,6 @@ public class UrlShortenerResourceTest {
     }
 
     @Test
-    public void shouldNotRegisterAndThrowException() {
-        ShortUrlDTO request = ShortUrlDTO.builder().url("$$$MALFORMED_URL$$$").build();
-        assertThat(resource.post(request).getStatusCode().is4xxClientError()).isTrue();
-    }
-
-    @Test
     public void shouldNoDuplicateRegister() {
         ShortUrlDTO request = ShortUrlDTO.builder().url(URL_MOCK).build();
 

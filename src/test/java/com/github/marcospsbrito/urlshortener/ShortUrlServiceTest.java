@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.ws.rs.NotFoundException;
-import java.net.MalformedURLException;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -48,7 +47,7 @@ public class ShortUrlServiceTest {
     }
 
     @Test
-    public void createShortUrl() throws MalformedURLException {
+    public void createShortUrl() {
         ShortUrl shortUrl = ShortUrl.builder().url(URL).key(KEY).build();
         when(repository.findByUrl(URL)).thenReturn(Optional.ofNullable(null));
         when(repository.findById(any())).thenReturn(Optional.ofNullable(null));
@@ -64,7 +63,7 @@ public class ShortUrlServiceTest {
     }
 
     @Test
-    public void shouldReturnExistent() throws MalformedURLException {
+    public void shouldReturnExistent() {
         ShortUrl shortUrl = ShortUrl.builder().url(URL).key(KEY).build();
         when(repository.findByUrl(URL)).thenReturn(Optional.ofNullable(shortUrl));
 
@@ -75,11 +74,6 @@ public class ShortUrlServiceTest {
         verify(repository, never()).save(any());
         assertThat(shortUrlDTO.getKey(), equalTo(shortUrl.getKey()));
         assertThat(shortUrlDTO.getUrl(), equalTo(shortUrl.getUrl()));
-    }
-
-    @Test(expected = MalformedURLException.class)
-    public void shouldThrowMalformedURLException() throws MalformedURLException {
-        service.createShortUrl("$$$MALFORMED$$$");
     }
 
 }

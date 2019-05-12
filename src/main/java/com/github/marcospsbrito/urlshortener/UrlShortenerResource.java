@@ -29,11 +29,7 @@ public class UrlShortenerResource {
     @JsonView(ShortUrlDTO.PostView.class)
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ShortUrlDTO> post(@RequestBody ShortUrlDTO dto){
-        try {
-            return ResponseEntity.ok(service.createShortUrl(dto.getUrl()));
-        } catch (MalformedURLException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(service.createShortUrl(dto.getUrl()));
     }
     
 }

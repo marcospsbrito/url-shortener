@@ -27,9 +27,7 @@ public class ShortUrlService {
         }
     }
 
-    public ShortUrlDTO createShortUrl(String url) throws MalformedURLException {
-        if(!new UrlValidator().isValid(url))
-            throw new MalformedURLException();
+    public ShortUrlDTO createShortUrl(String url) {
         try {
             return ShortUrlMapper.toDTO(repository.findByUrl(url).get());
         }catch (NoSuchElementException e){
