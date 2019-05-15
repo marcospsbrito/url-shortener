@@ -16,10 +16,15 @@ public class ShortUrlMapperTest {
 
     @Test
     public void toDTO() {
-        ShortUrl url = ShortUrl.builder().createAt(new Date()).key("k").url("url").build();
+        ShortUrl url = ShortUrl.builder()
+                .key("k")
+                .url("url")
+                .expiresAt(new Date())
+                .build();
         ShortUrlDTO urlDTO = ShortUrlMapper.toDTO(url);
         assertThat(urlDTO.getUrl(), equalTo(url.getUrl()));
         assertThat(urlDTO.getKey(), equalTo(url.getKey()));
+        assertThat(urlDTO.getExpiresAt(), equalTo(url.getExpiresAt()));
     }
 
     @Test

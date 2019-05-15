@@ -21,7 +21,6 @@ public class UrlShortenerResource {
     @Autowired
     private ShortUrlService service;
 
-    @JsonView(ShortUrlDTO.GetView.class)
     @RequestMapping(value = "/{key}",method = RequestMethod.GET)
     public ResponseEntity get(@PathVariable String key) {
         try{

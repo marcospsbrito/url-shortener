@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Builder
 @Getter
 @Setter
@@ -13,13 +15,13 @@ public class ShortUrlDTO {
 
     public static final String APP_HOST = "https://short-url-marcospsbrito.herokuapp.com/";
 
-    public interface GetView{}
     public interface PostView{}
 
-    @JsonView(GetView.class)
     private String url;
 
     private String key;
+
+    private Date expiresAt;
 
     @JsonView({PostView.class})
     public String getNewUrl(){
