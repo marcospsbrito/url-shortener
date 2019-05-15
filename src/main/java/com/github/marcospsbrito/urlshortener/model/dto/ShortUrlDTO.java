@@ -21,6 +21,7 @@ public class ShortUrlDTO {
 
     private String key;
 
+    @JsonView({PostView.class})
     private Date expiresAt;
 
     @JsonView({PostView.class})
