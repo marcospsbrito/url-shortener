@@ -1,6 +1,7 @@
 package com.github.marcospsbrito.urlshortener.model.entity;
 
 
+import io.undertow.util.DateUtils;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -20,6 +21,10 @@ public class ShortUrl{
     private String key;
     private String url;
     private Date createAt;
+    private Date expiresAt;
 
+    public boolean isActive() {
+        return expiresAt.after(new Date());
+    }
 }
 
