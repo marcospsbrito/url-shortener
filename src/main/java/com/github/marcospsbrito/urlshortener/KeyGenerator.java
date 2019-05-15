@@ -1,10 +1,9 @@
 package com.github.marcospsbrito.urlshortener;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Singleton;
-
-@Singleton
+@Component
 public class KeyGenerator {
 
     public String generate() {
