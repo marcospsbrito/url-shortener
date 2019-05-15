@@ -14,3 +14,17 @@ To run the project you have to clone this project and run follows Maven command.
 
 * Postman default requests https://www.getpostman.com/collections/3f2eee6c6e29a7dadbed
 * Host url - https://short-url-marcospsbrito.herokuapp.com/
+
+### Creation Body request
+
+```json
+    "url":"Required",
+    "expiresInMinutes":"optional Integer"
+```
+
+### Creation Body response
+
+```json
+    "newUrl":"http://valid.url",
+    "expiresAt":"Creation date plus expiresInMinutes or default value, 5 minutes"
+```
